@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   
   <servlet>
     <servlet-name>EditSubtitle</servlet-name>
@@ -11,15 +11,15 @@
   </servlet-mapping>
   
   
-   <servlet>
+  <servlet>
     <servlet-name>Upload</servlet-name>
     <servlet-class>com.subtitle.servlets.Upload</servlet-class>
-  	<multipart-config>
-  		<location>C:/Users/Administrateur/Desktop/SubtitleUltimate/SubtitleUltimate/WebContent/WEB-INF</location> <!-- Stockage temporaire -->
-  		<max-file-size>10485760</max-file-size>
-  		<max-request-size>52428800</max-request-size>
-  		<file-size-threshold>1048576</file-size-threshold>
-  	</multipart-config>
+    <multipart-config>
+      <location>C:/Users/Administrateur/Desktop/SubtitleUltimate/SubtitleUltimate/WebContent/WEB-INF</location>
+      <max-file-size>10485760</max-file-size>
+      <max-request-size>52428800</max-request-size>
+      <file-size-threshold>1048576</file-size-threshold>
+    </multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>Upload</servlet-name>
@@ -27,11 +27,22 @@
   </servlet-mapping>
   
   
-  <jsp-config>
-  		<jsp-property-group>
-  			<url-pattern>*.jsp</url-pattern>
-  			<include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
-  		</jsp-property-group>
-  </jsp-config>
+   <servlet>
+    <servlet-name>Save</servlet-name>
+    <servlet-class>com.subtitle.servlets.Save</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Save</servlet-name>
+    <url-pattern>/enreg</url-pattern>
+  </servlet-mapping>
   
+  
+  
+  
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
+    </jsp-property-group>
+  </jsp-config>
 </web-app>

@@ -13,7 +13,7 @@
 		<input type="submit" action="edit" value="get">
 	</form>
 	<form action="edit" method="post" name="form2" id="form2" enctype="multipart/form-data">
-		<input type="submit" value="post">
+		<input type="submit" value="charger">
 		<input type="file" name="fichier" id="fichier" >
 	</form>
 </body>
