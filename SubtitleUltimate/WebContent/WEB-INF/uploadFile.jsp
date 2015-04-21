@@ -9,5 +9,11 @@
 <body>
 	<p>Nous sommes dans la jsp UploadFile</p>
 	<a href="edit">aller à edit</a>
+	<form action="edit" method="get" name="form1" id="form1">
+		<input type="submit" action="edit" value="get">
+	</form>
+	<form action="edit" method="post" name="form2" id="form2">
+		<input type="submit" value="post">
+	</form>
 </body>
 </html>

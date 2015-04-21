@@ -9,5 +9,11 @@
 <body>
 	<p>Nous sommes dans la page des éditions des sous-titres</p>
 	<a href="upload">aller à edit</a>
+	<form action="upload" method="get" name="form1" id="form1">
+		<input type="submit" action="upload" value="get">
+	</form>
+	<form action="upload" method="post" name="form2" id="form2">
+		<input type="submit" action="upload" value="post">
+	</form>
 </body>
 </html>
