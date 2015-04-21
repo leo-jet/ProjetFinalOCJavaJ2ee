@@ -16,6 +16,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
 import com.subtitle.dao.SubtitleDao;
+import com.subtitle.utilities.SubtitlesHandler;
 
 
 
@@ -111,10 +112,10 @@ public class EditSubtitle extends HttpServlet {
 			                        item.write(storeFile);
 			                        request.setAttribute("message",
 			                            "Upload has been done successfully!");
-			                		/*SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
+			                		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
 			                		request.setAttribute("subtitles", subtitles.getSubtitles());
 			                		request.setAttribute("fichier", "");
-				        			System.out.println("Sortie de lecture");*/
+				        			System.out.println("Sortie de lecture");
 			                    }
 			                }
 			               /* SubtitlesHandler subtitles = new SubtitlesHandler(filePath);

@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,5 +13,15 @@
 	<form action="upload" method="post" name="form2" id="form2">
 		<input type="submit" action="upload" value="post">
 	</form>
+	<form method="post" name="form" id="form">    
+	    <table>
+	        <c:forEach items="${ subtitles }" var="line" varStatus="status">
+	        	<tr>
+	        		<td style="text-align:right;"><c:out value="${ line }" /></td>
+	        		<td><input type="text" name="line${ status.index }" id="line${ status.index }" size="35" /></td>
+	        	</tr>
+	    	</c:forEach>
+	    </table>
+    </form>
 </body>
 </html>
