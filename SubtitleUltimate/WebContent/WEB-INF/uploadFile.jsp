@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Edition des sous titres</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<p>Nous sommes dans la page des éditions des sous-titres</p>
-	<a href="upload">aller à edit</a>
+	<p>Nous sommes dans la jsp UploadFile</p>
+	<a href="edit">aller à edit</a>
 </body>
 </html>
