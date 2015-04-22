@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,12 +61,12 @@ public class EditSubtitle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost Edit");
-		uploadFile(request);
+		uploadFile(request, response);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/editSubtitle.jsp").forward(request, response);
 	}
 	
 	
-	private void uploadFile(HttpServletRequest request) {
+	private void uploadFile(HttpServletRequest request, HttpServletResponse response) {
 		// configures upload settings
 		    DiskFileItemFactory factory = new DiskFileItemFactory();
 		    // sets memory threshold - beyond which files are stored in disk
@@ -115,7 +116,9 @@ public class EditSubtitle extends HttpServlet {
 			                		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
 			                		request.setAttribute("subtitles", subtitles.getSubtitles());
 			                		request.setAttribute("fichier", "");
+			                		response.addCookie(new Cookie("cheminFichierCourant", filePath));
 				        			System.out.println("Sortie de lecture");
+				
 			                    }
 			                }
 			               /* SubtitlesHandler subtitles = new SubtitlesHandler(filePath);

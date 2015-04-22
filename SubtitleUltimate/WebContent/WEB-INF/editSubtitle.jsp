@@ -13,8 +13,10 @@
 	<form action="upload" method="post" name="form2" id="form2">
 		<input type="submit" action="upload" value="charger">
 	</form>
-	<form method="post" name="form" id="form">    
+	<form method="get" name="form" id="form" enctype="multipart/form-data" action="enreg">
+		<input type="submit" value="Enregistrer">    
 	    <table>
+	    	<input type="text" name="test" id="test">
 	        <c:forEach items="${ subtitles }" var="line" varStatus="status">
 	        	<tr>
 	        		<td style="text-align:right;"><c:out value="${ line }" /></td>
