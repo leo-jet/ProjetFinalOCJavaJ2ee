@@ -1,5 +1,6 @@
 package com.subtitle.servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -59,7 +60,9 @@ public class Save extends HttpServlet {
 		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
 		request.setAttribute("subtitles", subtitles.getSubtitles());
 		init();
-		subtitleDao.addSubtitles(listeTraduction, subtitles.getOriginalSubtitleTimes());
+		File fichier = new File(filePath);
+		String nomFichier = fichier.getName().substring(0, fichier.getName().indexOf("."));
+		subtitleDao.addSubtitles(listeTraduction, subtitles.getOriginalSubtitleTimes(), nomFichier);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/saveFile.jsp").forward(request, response);
 	}
 
@@ -69,6 +72,12 @@ public class Save extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost Save");
 		this.getServletContext().getRequestDispatcher("/WEB-INF/saveFile.jsp").forward(request, response);
+	}
+	
+	public String getNomFichier(String cheminFichier){
+		String nomFichier = null;
+		nomFichier = cheminFichier.substring(cheminFichier.lastIndexOf("\"")+1, cheminFichier.lastIndexOf(".")-1);
+		return nomFichier;
 	}
 
 }

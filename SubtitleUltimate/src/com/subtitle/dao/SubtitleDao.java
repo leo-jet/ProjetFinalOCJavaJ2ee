@@ -7,7 +7,7 @@ import com.subtitle.beans.Subtitle;
 
 public interface SubtitleDao {
 	List<Subtitle> lister();
-	void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction);
-	int testSiLaTableExist();
-	void creerTable();
+	void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction, String nomTable);
+	int testSiLaTableExist(String nomTable);
+	void creerTable(String nomTable);
 }

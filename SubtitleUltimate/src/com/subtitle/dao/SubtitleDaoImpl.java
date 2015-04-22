@@ -22,12 +22,12 @@ public class SubtitleDaoImpl implements SubtitleDao {
 	}
 
 	@Override
-	public void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction) {
+	public void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction, String nomTable) {
 		// TODO Auto-generated method stub
 		Connection connexion = null;
 		PreparedStatement pStatement = null;
 		try {
-			if(this.testSiLaTableExist()==1){
+			if(this.testSiLaTableExist(nomTable)==1){
 				connexion = daoFactory.getConnection();
 				Iterator<String> itListeTraduction = listeTraduction.iterator();
 				Iterator<String> itListeTimeTraduction = listeTimeTraduction.iterator();
@@ -35,7 +35,7 @@ public class SubtitleDaoImpl implements SubtitleDao {
 				while ((itListeTraduction.hasNext())&&(itListeTimeTraduction.hasNext())) {
 					String s1 = itListeTimeTraduction.next();
 					String s2 = itListeTraduction.next();
-					pStatement = connexion.prepareStatement("INSERT INTO subtitles (id, time, subtitle) VALUES(?,?,?) on duplicate key update time=values(time), subtitle=values(subtitle);");
+					pStatement = connexion.prepareStatement("INSERT INTO "+nomTable+" (id, time, subtitle) VALUES(?,?,?) on duplicate key update time=values(time), subtitle=values(subtitle);");
 					pStatement.setInt(1, i);
 					pStatement.setString(2, s1);
 					pStatement.setString(3, s2);
@@ -44,7 +44,7 @@ public class SubtitleDaoImpl implements SubtitleDao {
 				}
 				connexion.commit();
 			}else{
-				this.creerTable();
+				this.creerTable(nomTable);
 				connexion = daoFactory.getConnection();
 				Iterator<String> itListeTraduction = listeTraduction.iterator();
 				Iterator<String> itListeTimeTraduction = listeTimeTraduction.iterator();
@@ -52,7 +52,7 @@ public class SubtitleDaoImpl implements SubtitleDao {
 				while (itListeTraduction.hasNext()) {
 					String s1 = itListeTimeTraduction.next();
 					String s2 = itListeTraduction.next();
-					pStatement = connexion.prepareStatement("INSERT INTO subtitles (id, time, subtitle) VALUES(?,?,?) on duplicate key update time=values(time), subtitle=values(subtitle);");
+					pStatement = connexion.prepareStatement("INSERT INTO "+nomTable+ "(id, time, subtitle) VALUES(?,?,?) on duplicate key update time=values(time), subtitle=values(subtitle);");
 					pStatement.setInt(1, i);
 					pStatement.setString(2, s1);
 					pStatement.setString(3, s2);
@@ -116,14 +116,14 @@ public class SubtitleDaoImpl implements SubtitleDao {
 		return subtitles;
 	}
 	
-	public int testSiLaTableExist(){
+	public int testSiLaTableExist(String nomTable){
 		int test = 0;
 		
 		ResultSet resultSet;
 		try {
 			Connection connection = daoFactory.getConnection();
 			DatabaseMetaData metadata = connection.getMetaData();
-			resultSet = metadata.getTables(null, null, "subtitles", null);
+			resultSet = metadata.getTables(null, null, nomTable, null);
 			if(resultSet.next()){
 			    // Table exists
 				test = 1;
@@ -135,17 +135,18 @@ public class SubtitleDaoImpl implements SubtitleDao {
 		return test;
 	}
 	
-	public void creerTable(){
+	public void creerTable(String nomTable){
 		Connection connection = null;
 		Statement statement = null;
 		System.out.println("on est dans creerTable");
+		System.out.println(nomTable);
 		try {
 			connection = daoFactory.getConnection();
 			statement = connection.createStatement();
 				
 			String requeteCreation ;
 				
-			requeteCreation = "CREATE TABLE `javadb`.`subtitles` ("+
+			requeteCreation = "CREATE TABLE `javadb`.`"+nomTable+"` ("+
 						 " `id` INT NOT NULL AUTO_INCREMENT,"+
 						 " `time` VARCHAR(45) NOT NULL,"+
 						  "`subtitle` VARCHAR(1000) NOT NULL,"+
@@ -157,4 +158,5 @@ public class SubtitleDaoImpl implements SubtitleDao {
 			e.printStackTrace();
 		}
 	}
+
 }

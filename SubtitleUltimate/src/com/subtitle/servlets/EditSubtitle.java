@@ -111,8 +111,7 @@ public class EditSubtitle extends HttpServlet {
 			 
 			                        // saves the file on disk
 			                        item.write(storeFile);
-			                        request.setAttribute("message",
-			                            "Upload has been done successfully!");
+			                        request.setAttribute("message","Upload has been done successfully!");
 			                		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
 			                		request.setAttribute("subtitles", subtitles.getSubtitles());
 			                		request.setAttribute("fichier", "");
@@ -121,12 +120,6 @@ public class EditSubtitle extends HttpServlet {
 				
 			                    }
 			                }
-			               /* SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
-			    			request.setAttribute("subtitles", subtitles.getSubtitles());
-			    			
-			    			Formulaires form = new Formulaires();
-			    			ArrayList<String> listeTraduction = null;
-			    			listeTraduction =  form.recupereTraduction(request);*/
 			            }
 		            }else{
 		            	

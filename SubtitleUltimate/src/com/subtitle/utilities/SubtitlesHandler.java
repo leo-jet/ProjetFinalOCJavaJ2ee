@@ -10,6 +10,7 @@ public class SubtitlesHandler {
 	private ArrayList<String> originalSubtitles = null;
 	private ArrayList<String> originalSubtitleTimes = null;
 	private ArrayList<String> translatedSubtitles = null;
+	private String nomTable;
 
 	public SubtitlesHandler(String fileName) {
 		
