@@ -5,7 +5,7 @@
 <title>Edition des sous titres</title>
 </head>
 <body>
-	<p>Nous sommes dans la page des éditions des sous-titres</p>
+	<p>Bienvenue dans notre site de traduction</p>
 	<a href="upload">aller à edit</a>
 	<form action="enreg" method="post" name="form1" id="form1">
 		<input type="submit" action="enreg" value="Enregistrer">
@@ -13,16 +13,8 @@
 	<form action="upload" method="post" name="form2" id="form2">
 		<input type="submit" action="upload" value="charger">
 	</form>
-	<form method="get" name="form" id="form" enctype="multipart/form-data" action="enreg">
-		<input type="submit" value="Enregistrer">    
-	    <table>
-	        <c:forEach items="${ subtitles }" var="line" varStatus="status">
-	        	<tr>
-	        		<td style="text-align:right;"><c:out value="${ line }" /></td>
-	        		<td><input type="text" name="line${ status.index }" id="line${ status.index }" size="35" /></td>
-	        	</tr>
-	    	</c:forEach>
-	    </table>
-    </form>
+	<form action="upload" method="post" name="form3" id="form3">
+		<input type="submit" action="upload" value="exporter">
+	</form>
 </body>
 </html>

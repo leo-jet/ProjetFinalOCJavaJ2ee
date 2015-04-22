@@ -7,7 +7,7 @@
 <title>Page d'enrégistrement</title>
 </head>
 <body>
-	<form action="edit" method="get" name="formSave" id="formSave">
+	<form action="accueil" method="get" name="formSave" id="formSave">
 		<input type="submit" value="Enregister" name="enregForm" id="enregForm">
 		<input type="submit" value="Annuler" name="annulerForm" id="annulerForm">
 	</form>
