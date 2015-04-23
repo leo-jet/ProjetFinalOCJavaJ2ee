@@ -16,7 +16,6 @@ public class SubtitlesHandler {
 		
 		ArrayList<String> tamponSubtitles = new ArrayList<String>();
 		originalSubtitles = new ArrayList<String>();
-		translatedSubtitles = new ArrayList<String>();
 		originalSubtitleTimes = new ArrayList<String>();
 		BufferedReader br;
 		
@@ -56,10 +55,6 @@ public class SubtitlesHandler {
 
 	public ArrayList<String> getTranslatedSubtitles() {
 		return translatedSubtitles;
-	}
-
-	public void setTranslatedSubtitles(ArrayList<String> translatedSubtitles) {
-		this.translatedSubtitles = translatedSubtitles;
 	}
 
 	public ArrayList<String> getOriginalSubtitleTimes() {

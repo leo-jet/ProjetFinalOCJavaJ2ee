@@ -13,7 +13,7 @@
 	<form action="upload" method="post" name="form2" id="form2">
 		<input type="submit" action="upload" value="charger">
 	</form>
-	<form action="upload" method="post" name="form3" id="form3">
+	<form action="export" method="get" name="form3" id="form3">
 		<input type="submit" action="upload" value="exporter">
 	</form>
 </body>

@@ -10,4 +10,5 @@ public interface SubtitleDao {
 	void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction, String nomTable);
 	int testSiLaTableExist(String nomTable);
 	void creerTable(String nomTable);
+	public List<Subtitle> extraireTraduction(String nomTable);
 }

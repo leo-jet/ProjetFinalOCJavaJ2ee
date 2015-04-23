@@ -1,5 +1,9 @@
 package com.subtitle.dao;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -158,5 +162,62 @@ public class SubtitleDaoImpl implements SubtitleDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Subtitle> extraireTraduction(String nomTable){
+		
+		List<Subtitle> subtitles = new ArrayList<Subtitle>();
+		
+		Connection connexion = null;
+		Statement statement = null;
+		ResultSet resultat = null;
+		
+		try {
+			connexion = daoFactory.getConnection();
+			statement = connexion.createStatement();
+			resultat = statement.executeQuery("SELECT time, subtitle FROM "+nomTable+";");
+			
+			while (resultat.next()){
+				String time = resultat.getString("time");
+				String subtitle = resultat.getString("subtitle");
+				Subtitle subtitleLu = new Subtitle();
 
+				subtitleLu.setSubtitle(subtitle);
+				subtitleLu.setTime(time);
+				
+				subtitles.add(subtitleLu);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//on sauvegarde subtitles dans un fichier
+		Iterator<Subtitle> itSubtitles = subtitles.iterator();
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter("C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF"+File.separator+"upload"+File.separator+nomTable+"Traduction.srt", "UTF-8");
+			int i = 1;
+			while (itSubtitles.hasNext()) {
+				
+				Subtitle s= itSubtitles.next();
+				writer.println(i);
+				writer.println(s.getTime());
+				writer.println(s.getSubtitle()+"\n");
+				i++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if(writer != null){
+				writer.close();
+			}
+		}
+		
+		return subtitles;
+	}
+	
 }
