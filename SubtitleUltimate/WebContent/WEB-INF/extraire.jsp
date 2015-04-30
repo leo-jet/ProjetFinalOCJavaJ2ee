@@ -7,14 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<form action="export" method="post" name="formExport" id="formExport">
 		<p>
 			<label>Nom du fichier : </label> <input type="text" name="nomTable" id="nomTable"> 
 		</p>
-		<input type="submit" value="Exporter" name="enregForm" id="enregForm">
+		<input type="submit" value="Exporter" name="enregistrerExtraire" id="enregistrerExtraire">
 		<input type="submit" value="Annuler" name="annulerForm" id="annulerForm">
 	</form>
-
 </body>
 </html>

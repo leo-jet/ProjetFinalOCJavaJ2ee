@@ -2,6 +2,7 @@ package com.subtitle.servlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
+import com.subtitle.dao.DaoFactory;
 import com.subtitle.dao.SubtitleDao;
 import com.subtitle.utilities.SubtitlesHandler;
 
@@ -29,9 +31,14 @@ public class EditSubtitle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final int TAILLE_TAMPON = 10240;
 	public static final String CHEMIN_FICHIER = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF";
-	private static String FILE_NAME = "/WEB-INF/password_presentation.srt";
-	private SubtitleDao subtitleDao;
-	
+
+	  private SubtitleDao subtitleDao;
+		
+	public void init() throws ServletException{
+				DaoFactory daoFactory = DaoFactory.getInstance();
+				this.subtitleDao = daoFactory.getSubtitleDao();
+	}
+		
 	
 	// location to store file uploaded
     private static final String UPLOAD_DIRECTORY = "upload";
@@ -52,7 +59,22 @@ public class EditSubtitle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet Edit");
+		init();
+		String openSubtitle = request.getParameter("open");
+		ArrayList<String> subtitlesTraduit = new ArrayList<String>();
+		String uploadPath = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF" + File.separator + UPLOAD_DIRECTORY;
+		String filePath = null;
+		filePath = uploadPath + File.separator + openSubtitle +".srt";
+		Cookie cookie = this.getCookie(request, "cheminFichierCourant");
+		if(cookie != null){
+			cookie.setValue(filePath);
+			response.addCookie(cookie);
+		}
+		SubtitlesHandler subtitlesOriginal = new SubtitlesHandler(filePath);
+		subtitlesTraduit = (ArrayList<String>) subtitleDao.OuvrirUneTraduction(openSubtitle);
+		subtitlesOriginal.setTranslatedSubtitles(subtitlesTraduit);
+		request.setAttribute("subtitlesOriginal", subtitlesOriginal.getSubtitles());
+		request.setAttribute("subtitlesTraduit", subtitlesTraduit);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/editSubtitle.jsp").forward(request, response);
 	}
 
@@ -60,11 +82,21 @@ public class EditSubtitle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost Edit");
 		uploadFile(request, response);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/editSubtitle.jsp").forward(request, response);
 	}
 	
+	public Cookie getCookie(HttpServletRequest request, String nomCookie){
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals(nomCookie)){
+					return cookie;
+				}
+			}
+		}
+		return null;
+	}
 	
 	private void uploadFile(HttpServletRequest request, HttpServletResponse response) {
 		// configures upload settings
@@ -93,9 +125,7 @@ public class EditSubtitle extends HttpServlet {
 		    }
 		    try {
 		        // parses the request's content to extract file data
-		        @SuppressWarnings("unchecked")
 		        List<FileItem> formItems = upload.parseRequest(new ServletRequestContext(request));
-		        System.out.println(formItems);
 		            if(!formItems.get(0).getName().isEmpty()){
 		            	String filePath = null;
 			            if (formItems != null && formItems.size() > 0) {
@@ -106,17 +136,15 @@ public class EditSubtitle extends HttpServlet {
 			                    	
 			                        String fileName = new File(item.getName()).getName();
 			                        filePath = uploadPath + File.separator + fileName;
-			                        System.out.println(filePath+fileName);
 			                        File storeFile = new File(filePath);
 			 
 			                        // saves the file on disk
 			                        item.write(storeFile);
 			                        request.setAttribute("message","Upload has been done successfully!");
 			                		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
-			                		request.setAttribute("subtitles", subtitles.getSubtitles());
+			                		request.setAttribute("subtitlesOriginal", subtitles.getSubtitles());
 			                		request.setAttribute("fichier", "");
 			                		response.addCookie(new Cookie("cheminFichierCourant", filePath));
-				        			System.out.println("Sortie de lecture");
 				
 			                    }
 			                }

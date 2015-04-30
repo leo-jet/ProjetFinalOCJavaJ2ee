@@ -13,13 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.subtitle.dao.DaoFactory;
 import com.subtitle.dao.SubtitleDao;
-import com.subtitle.dao.SubtitleDaoImpl;
 import com.subtitle.forms.FormSave;
 import com.subtitle.utilities.SubtitlesHandler;
 
-/**
- * Servlet implementation class Save
- */
 @WebServlet("/Save")
 public class Save extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -43,19 +39,14 @@ public class Save extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet Save");
-		System.out.println(request.getParameter("line1"));
 		form = new FormSave();
 		ArrayList<String> listeTraduction = null;
 		listeTraduction =  form.recupereTraduction(request);
 		String filePath = null;
-		Cookie[] cookies = request.getCookies();
-		if(cookies != null){
-			for(Cookie cookie : cookies){
-				if(cookie.getName().equals("cheminFichierCourant")){
-					filePath = cookie.getValue();
-				}
-			}
+		
+		Cookie cookie = this.getCookie(request, "cheminFichierCourant");
+		if(cookie != null){
+			filePath = cookie.getValue();
 		}
 		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
 		request.setAttribute("subtitles", subtitles.getSubtitles());
@@ -70,7 +61,6 @@ public class Save extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost Save");
 		this.getServletContext().getRequestDispatcher("/WEB-INF/saveFile.jsp").forward(request, response);
 	}
 	
@@ -79,5 +69,16 @@ public class Save extends HttpServlet {
 		nomFichier = cheminFichier.substring(cheminFichier.lastIndexOf("\"")+1, cheminFichier.lastIndexOf(".")-1);
 		return nomFichier;
 	}
-
+	
+	public Cookie getCookie(HttpServletRequest request, String nomCookie){
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals(nomCookie)){
+					return cookie;
+				}
+			}
+		}
+		return null;
+	}
 }

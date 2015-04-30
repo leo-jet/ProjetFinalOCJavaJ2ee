@@ -9,6 +9,14 @@
     <url-pattern>/edit</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ModifySubtitle</servlet-name>
+    <servlet-class>com.subtitle.servlets.ModifySubtitle</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModifySubtitle</servlet-name>
+    <url-pattern>/changeSubtitle</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>Extract</servlet-name>
     <servlet-class>com.subtitle.servlets.Extract</servlet-class>
   </servlet>

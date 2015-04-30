@@ -3,12 +3,12 @@ package com.subtitle.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.subtitle.beans.Subtitle;
-
+ 
 public interface SubtitleDao {
-	List<Subtitle> lister();
+	List<String> lister();
 	void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction, String nomTable);
 	int testSiLaTableExist(String nomTable);
 	void creerTable(String nomTable);
-	public List<Subtitle> extraireTraduction(String nomTable);
+	int extraireTraduction(String nomTable);
+	List<String> OuvrirUneTraduction(String nomTable);
 }
