@@ -1,10 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
 <script> function submitform()
 			{
 				  document.form.submit();
@@ -25,8 +18,7 @@
 				  document.form3.submit();
 			}
 	</script>
-</head>
-<body>
+
 <div id="menu">
 		<ul class="menu">
 			<li>
@@ -44,20 +36,4 @@
 			</li>
 			<li class="last"><a href="#"><span>Contacts</span></a></li>
 		</ul>
-	</div>
-	<form action="export" method="post" name="formExport" id="formExport">
-		<p>
-			<label>Nom du fichier : </label> <input type="text" name="nomTable" id="nomTable"> 
-		</p>
-		<input type="submit" value="Exporter" name="gobutton" id="gobutton">
-		<input type="submit" value="Annuler" name="gobutton" id="gobutton">
-	</form>
-	<table>
-	        <c:forEach items="${ nomTables }" var="line" varStatus="status">
-	        	<tr>
-	        		<td style="text-align:right;"><a href="file:///C:/Users/Administrateur/Desktop/SubtitleUltimate/SubtitleUltimate/WebContent/WEB-INF/upload/${ line }.srt" download="${ line }.srt" target="_blank"><c:out value="${ line }" /></a></td>
-	        	</tr>
-	    	</c:forEach>
-	</table>
-</body>
-</html>
+</div>

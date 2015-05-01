@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -30,9 +31,7 @@ import com.subtitle.utilities.SubtitlesHandler;
 public class EditSubtitle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final int TAILLE_TAMPON = 10240;
-	public static final String CHEMIN_FICHIER = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF";
-
-	  private SubtitleDao subtitleDao;
+	private SubtitleDao subtitleDao;
 		
 	public void init() throws ServletException{
 				DaoFactory daoFactory = DaoFactory.getInstance();
@@ -62,7 +61,8 @@ public class EditSubtitle extends HttpServlet {
 		init();
 		String openSubtitle = request.getParameter("open");
 		ArrayList<String> subtitlesTraduit = new ArrayList<String>();
-		String uploadPath = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF" + File.separator + UPLOAD_DIRECTORY;
+		System.out.println(this.getServletContext().getRealPath("/WEB-INF"));
+		String uploadPath = this.getServletContext().getRealPath("/WEB-INF") + File.separator + UPLOAD_DIRECTORY;
 		String filePath = null;
 		filePath = uploadPath + File.separator + openSubtitle +".srt";
 		Cookie cookie = this.getCookie(request, "cheminFichierCourant");
@@ -116,7 +116,9 @@ public class EditSubtitle extends HttpServlet {
  
 		    // constructs the directory path to store upload file
 		    // this path is relative to application's directory
-		    String uploadPath = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF" + File.separator + UPLOAD_DIRECTORY;
+		    ServletContext servletContext = request.getSession().getServletContext();
+		    String uploadPath = servletContext.getRealPath("/WEB-INF")+ UPLOAD_DIRECTORY;
+		    System.out.println(uploadPath);
 		     
 		    // creates the directory if it does not exist
 		    File uploadDir = new File(uploadPath);
@@ -126,7 +128,8 @@ public class EditSubtitle extends HttpServlet {
 		    try {
 		        // parses the request's content to extract file data
 		        List<FileItem> formItems = upload.parseRequest(new ServletRequestContext(request));
-		            if(!formItems.get(0).getName().isEmpty()){
+		        System.out.println(formItems.size());
+		            if(!formItems.get(1).getName().isEmpty()){
 		            	String filePath = null;
 			            if (formItems != null && formItems.size() > 0) {
 			                // iterates over form's fields

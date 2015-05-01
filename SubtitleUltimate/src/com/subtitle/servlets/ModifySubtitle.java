@@ -57,7 +57,7 @@ public class ModifySubtitle extends HttpServlet {
 		init();
 		String openSubtitle = request.getParameter("open");
 		ArrayList<String> subtitles = new ArrayList<String>();
-		String uploadPath = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF" + File.separator + "upload";
+		String uploadPath = this.getServletContext().getRealPath("/WEB-INF") + File.separator + "upload";
 		String filePath = null;
 		filePath = uploadPath + File.separator + openSubtitle +".srt";
 		Cookie cookie = this.getCookie(request, "cheminFichierCourant");

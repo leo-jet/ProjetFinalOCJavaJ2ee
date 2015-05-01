@@ -9,6 +9,6 @@ public interface SubtitleDao {
 	void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction, String nomTable);
 	int testSiLaTableExist(String nomTable);
 	void creerTable(String nomTable);
-	int extraireTraduction(String nomTable);
+	int extraireTraduction(String nomTable, String cheminWebInf);
 	List<String> OuvrirUneTraduction(String nomTable);
 }

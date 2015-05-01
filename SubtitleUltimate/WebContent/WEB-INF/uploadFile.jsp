@@ -5,16 +5,49 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<script> function submitform()
+			{
+				  document.form.submit();
+			}
+	</script>
+	<script> function submitform1()
+			{
+				  document.form1.submit();
+			}
+	</script>
+	<script> function submitform2()
+			{
+				  document.form2.submit();
+			}
+	</script>
+	<script> function submitform3()
+			{
+				  document.form3.submit();
+			}
+	</script>
 </head>
 <body>
-	<p>Nous sommes dans la jsp UploadFile</p>
-	<a href="edit">aller à edit</a>
-	<form action="edit" method="get" name="form1" id="form1">
-		<input type="submit" action="edit" value="get">
-	</form>
-	<form action="edit" method="post" name="form2" id="form2" enctype="multipart/form-data">
-		<input type="submit" value="charger">
-		<input type="file" name="fichier" id="fichier" >
+	<div id="menu">
+		<ul class="menu">
+			<li>
+				<form name="form" action="accueil" ><a href="javascript:submitform()" class="parent"><span>Accueil</span></a></form>
+			</li>
+			<li>
+				<form action="changeSubtitle" method="get" name="form1" id="form1"><a href="javascript:submitform1()" class="parent"><span>Modifier</span></a></form>
+			</li>
+			<li>
+				<form action="upload" method="post" name="form2" id="form2"><a href="javascript:submitform2()" class="parent"><span>Charger</span></a></form>
+			</li>
+			
+			<li>
+				<form action="export" method="get" name="form3" id="form3"><a href="javascript:submitform3()" class="parent"><span>Exporter</span></a></form>
+			</li>
+			<li class="last"><a href="#"><span>Contacts</span></a></li>
+		</ul>
+	</div>
+	<form action="edit" method="post" name="formUpload2" id="formUpload2" enctype="multipart/form-data">
+		<input type="submit" value="charger" name="gobutton" id="gobutton">
+		<input type="file" name="fichier" id="fichier" name="gobutton" id="gobutton" >
 	</form>
 </body>
 </html>

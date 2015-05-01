@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.subtitle.beans.Subtitle;
+import com.subtitle.servlets.Accueil;
 
 
 public class SubtitleDaoImpl implements SubtitleDao {
@@ -152,9 +153,11 @@ public class SubtitleDaoImpl implements SubtitleDao {
 		}
 	}
 	
-	public int extraireTraduction(String nomTable){
+	public int extraireTraduction(String nomTable, String cheminWebInf){
 		
 		int testExtraction = 0;
+		
+		Accueil accueil = new Accueil();
 		
 		List<Subtitle> subtitles = new ArrayList<Subtitle>();
 		PrintWriter writer = null;
@@ -186,7 +189,9 @@ public class SubtitleDaoImpl implements SubtitleDao {
 				Iterator<Subtitle> itSubtitles = subtitles.iterator();
 				
 				// creates the directory if it does not exist
-				String uploadPath = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF"+File.separator+"upload";
+				String uploadPath = cheminWebInf+File.separator+"upload";
+
+				System.out.println(uploadPath);
 			    File uploadDir = new File(uploadPath);
 			    if (!uploadDir.exists()) {
 			        uploadDir.mkdir();

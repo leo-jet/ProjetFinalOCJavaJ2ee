@@ -41,10 +41,6 @@ public class Accueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.addCookie(new Cookie("cheminFichierCourant", ""));
-		init();
-		List<String> nomTables = new ArrayList<String>();
-		nomTables = subtitleDao.lister();
-		request.setAttribute("nomTables", nomTables);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 	}
 

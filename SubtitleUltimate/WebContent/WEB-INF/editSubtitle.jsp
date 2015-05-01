@@ -3,18 +3,56 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edition des sous titres</title>
+<script> function submitform()
+			{
+				  document.form.submit();
+			}
+	</script>
+	<script> function submitform1()
+			{
+				  document.form1.submit();
+			}
+	</script>
+	<script> function submitform2()
+			{
+				  document.form2.submit();
+			}
+	</script>
+	<script> function submitform3()
+			{
+				  document.form3.submit();
+			}
+	</script>
 </head>
 <body>
-	<p>Nous sommes dans la page des éditions des sous-titres</p>
+	<div id="menu">
+		<ul class="menu">
+			<li>
+				<form name="form" action="accueil" ><a href="javascript:submitform()" class="parent"><span>Accueil</span></a></form>
+			</li>
+			<li>
+				<form action="changeSubtitle" method="get" name="form1" id="form1"><a href="javascript:submitform1()" class="parent"><span>Modifier</span></a></form>
+			</li>
+			<li>
+				<form action="upload" method="post" name="form2" id="form2"><a href="javascript:submitform2()" class="parent"><span>Charger</span></a></form>
+			</li>
+			
+			<li>
+				<form action="export" method="get" name="form3" id="form3"><a href="javascript:submitform3()" class="parent"><span>Exporter</span></a></form>
+			</li>
+			<li class="last"><a href="#"><span>Contacts</span></a></li>
+		</ul>
+	</div>
+	
 	<a href="upload">aller à edit</a>
-	<form action="enreg" method="post" name="form1" id="form1">
+	<form action="enreg" method="post" name="formEdit1" id="formEdit1">
 		<input type="submit" action="enreg" value="Modifier" name="MofifyEdit" id="">
 	</form>
-	<form action="upload" method="post" name="form2" id="form2">
-		<input type="submit" action="upload" value="chargerEdit" name="charger" id="charger">
+	<form action="upload" method="post" name="formEdit2" id="formEdit2">
+		<input type="submit" action="upload" value="chargerEdit" name="gobutton" id="gobutton">
 	</form>
-	<form method="get" name="form" id="form" enctype="multipart/form-data" action="enreg">
-		<input type="submit" value="Enregistrer" name="EnregistrerEdit" id="EnregistrerEdit">   
+	<form method="get" name="formEdit" id="formEdit" enctype="multipart/form-data" action="enreg">
+		<input type="submit" value="Enregistrer" name="gobutton" id="gobutton">   
 	    <table>
 	        <c:forEach items="${ subtitlesOriginal }" var="line" varStatus="status">
 	        	<tr>

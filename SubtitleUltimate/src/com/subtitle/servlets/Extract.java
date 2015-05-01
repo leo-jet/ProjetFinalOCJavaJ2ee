@@ -1,8 +1,11 @@
 package com.subtitle.servlets;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +41,10 @@ public class Extract extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		init();
+		List<String> nomTables = new ArrayList<String>();
+		nomTables = subtitleDao.lister();
+		request.setAttribute("nomTables", nomTables);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/extraire.jsp").forward(request, response);
 	}
 
@@ -46,13 +53,13 @@ public class Extract extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		init();
-		if(subtitleDao.extraireTraduction(request.getParameter("nomTable"))==1){
+		if(subtitleDao.extraireTraduction(request.getParameter("nomTable"), this.getServletContext().getRealPath("/WEB-INF"))==1){
 			String nomTable = request.getParameter("nomTable");
 			request.setAttribute("message", "Le fichier a été bien exporté");
 			response.setContentType("text/html");  
 			PrintWriter out = response.getWriter();  
 			String filename = nomTable+".srt";   
-			String filepath = "C:\\Users\\Administrateur\\Desktop\\SubtitleUltimate\\SubtitleUltimate\\WebContent\\WEB-INF\\upload\\";   
+			String filepath = this.getServletContext().getRealPath("/WEB-INF/upload");   
 			response.setContentType("APPLICATION/OCTET-STREAM");   
 			response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");   
 			  
