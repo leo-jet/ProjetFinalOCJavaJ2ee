@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.subtitle.beans.DossierUpload;
 import com.subtitle.dao.DaoFactory;
 import com.subtitle.dao.SubtitleDao;
 import com.subtitle.utilities.SubtitlesHandler;
+import com.subtitle.utilities.SubtitlesHandlerException;
 
 /**
  * Servlet implementation class ModifiySubtitle
@@ -22,13 +24,14 @@ import com.subtitle.utilities.SubtitlesHandler;
 @WebServlet("/ModifiySubtitle")
 public class ModifySubtitle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private DossierUpload dossierUpload;
   
     private SubtitleDao subtitleDao;
 	
 	 public void init() throws ServletException{
 			DaoFactory daoFactory = DaoFactory.getInstance();
 			this.subtitleDao = daoFactory.getSubtitleDao();
+			dossierUpload = new DossierUpload();
 	}
 	
     /**
@@ -57,7 +60,7 @@ public class ModifySubtitle extends HttpServlet {
 		init();
 		String openSubtitle = request.getParameter("open");
 		ArrayList<String> subtitles = new ArrayList<String>();
-		String uploadPath = this.getServletContext().getRealPath("/WEB-INF") + File.separator + "upload";
+		String uploadPath = dossierUpload.getChemin()+ File.separator + "upload";
 		String filePath = null;
 		filePath = uploadPath + File.separator + openSubtitle +".srt";
 		Cookie cookie = this.getCookie(request, "cheminFichierCourant");
@@ -65,11 +68,18 @@ public class ModifySubtitle extends HttpServlet {
 			cookie.setValue(filePath);
 			response.addCookie(cookie);
 		}
-		SubtitlesHandler subtitlesOriginal = new SubtitlesHandler(filePath);
-		subtitles = (ArrayList<String>) subtitleDao.OuvrirUneTraduction(openSubtitle);
-		subtitlesOriginal.setTranslatedSubtitles(subtitles);
-		request.setAttribute("subtitlesOriginal", subtitlesOriginal.getSubtitles());
-		request.setAttribute("subtitles", subtitles);
+		SubtitlesHandler subtitlesOriginal;
+		try {
+			subtitlesOriginal = new SubtitlesHandler(filePath);
+			subtitles = (ArrayList<String>) subtitleDao.OuvrirUneTraduction(openSubtitle);
+			subtitlesOriginal.setTranslatedSubtitles(subtitles);
+			request.setAttribute("subtitlesOriginal", subtitlesOriginal.getSubtitles());
+			request.setAttribute("subtitles", subtitles);
+		} catch (SubtitlesHandlerException e) {
+			// TODO Auto-generated catch block
+			request.setAttribute("erreur", e.getMessage());
+		}
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/modify.jsp").forward(request, response);
 	}
 	

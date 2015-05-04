@@ -15,6 +15,7 @@ import com.subtitle.dao.DaoFactory;
 import com.subtitle.dao.SubtitleDao;
 import com.subtitle.forms.FormSave;
 import com.subtitle.utilities.SubtitlesHandler;
+import com.subtitle.utilities.SubtitlesHandlerException;
 
 @WebServlet("/Save")
 public class Save extends HttpServlet {
@@ -48,12 +49,18 @@ public class Save extends HttpServlet {
 		if(cookie != null){
 			filePath = cookie.getValue();
 		}
-		SubtitlesHandler subtitles = new SubtitlesHandler(filePath);
-		request.setAttribute("subtitles", subtitles.getSubtitles());
-		init();
-		File fichier = new File(filePath);
-		String nomFichier = fichier.getName().substring(0, fichier.getName().indexOf("."));
-		subtitleDao.addSubtitles(listeTraduction, subtitles.getOriginalSubtitleTimes(), nomFichier);
+		SubtitlesHandler subtitles;
+		try {
+			subtitles = new SubtitlesHandler(filePath);
+			request.setAttribute("subtitles", subtitles.getSubtitles());
+			init();
+			File fichier = new File(filePath);
+			String nomFichier = fichier.getName().substring(0, fichier.getName().indexOf("."));
+			subtitleDao.addSubtitles(listeTraduction, subtitles.getOriginalSubtitleTimes(), nomFichier);
+		} catch (SubtitlesHandlerException e) {
+			request.setAttribute("erreur", e.getMessage());
+		}
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/saveFile.jsp").forward(request, response);
 	}
 

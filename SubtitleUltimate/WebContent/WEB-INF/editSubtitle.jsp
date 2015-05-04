@@ -44,24 +44,20 @@
 		</ul>
 	</div>
 	
-	<a href="upload">aller à edit</a>
-	<form action="enreg" method="post" name="formEdit1" id="formEdit1">
-		<input type="submit" action="enreg" value="Modifier" name="MofifyEdit" id="">
-	</form>
-	<form action="upload" method="post" name="formEdit2" id="formEdit2">
-		<input type="submit" action="upload" value="chargerEdit" name="gobutton" id="gobutton">
-	</form>
-	<form method="get" name="formEdit" id="formEdit" enctype="multipart/form-data" action="enreg">
-		<input type="submit" value="Enregistrer" name="gobutton" id="gobutton">   
-	    <table>
-	        <c:forEach items="${ subtitlesOriginal }" var="line" varStatus="status">
-	        	<tr>
-	        		<td style="text-align:right;"><c:out value="${ line }" /></td>
-	        		<td><input type="text" name="line${ status.index }" id="line${ status.index }" value="${ subtitlesTraduit[status.index] }" size="35" /></td>
-	        	</tr>
-	    	</c:forEach>
-	    </table>
-    </form>
-    
+	<c:if test="${ !empty erreur }"><p style="color:red;"><c:out value="${ erreur }"></c:out></p></c:if>
+	
+	<c:if test="${ empty erreur }">
+		<form method="get" name="formEdit" id="formEdit" enctype="multipart/form-data" action="enreg">
+			<input type="submit" value="Enregistrer" name="gobutton" id="gobutton" style="position:fixed; top: 35px; right: 10px;"s>   
+		    <table>
+		        <c:forEach items="${ subtitlesOriginal }" var="line" varStatus="status">
+		        	<tr>
+		        		<td style="text-align:right;"><c:out value="${ line }" /></td>
+		        		<td><input type="text" name="line${ status.index }" id="line${ status.index }" value="${ subtitlesTraduit[status.index] }" size="35" /></td>
+		        	</tr>
+		    	</c:forEach>
+		    </table>
+	    </form>
+    </c:if>
 </body>
 </html>

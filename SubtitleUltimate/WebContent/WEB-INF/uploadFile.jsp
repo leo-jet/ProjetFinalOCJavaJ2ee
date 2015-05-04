@@ -45,9 +45,10 @@
 			<li class="last"><a href="#"><span>Contacts</span></a></li>
 		</ul>
 	</div>
+	<c:if test="${ !empty erreur }"><p style="color:red;"><c:out value="${ erreur }"></c:out></p></c:if>
 	<form action="edit" method="post" name="formUpload2" id="formUpload2" enctype="multipart/form-data">
-		<input type="submit" value="charger" name="gobutton" id="gobutton">
-		<input type="file" name="fichier" id="fichier" name="gobutton" id="gobutton" >
+		<input type="submit" value="charger" name="gobutton" id="gobutton" />
+		<input type="file" name="fichier" id="fichier" name="fichier"/>
 	</form>
 </body>
 </html>

@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.subtitle.beans.Subtitle;
-import com.subtitle.servlets.Accueil;
 
 
 public class SubtitleDaoImpl implements SubtitleDao {
@@ -27,8 +26,6 @@ public class SubtitleDaoImpl implements SubtitleDao {
 
 	@Override
 	public void addSubtitles(ArrayList<String> listeTraduction, ArrayList<String> listeTimeTraduction, String nomTable) {
-		// TODO Auto-generated method stub
-		System.out.println("debut addsubtitles");
 		Connection connexion = null;
 		PreparedStatement pStatement = null;
 		try {
@@ -86,21 +83,18 @@ public class SubtitleDaoImpl implements SubtitleDao {
 			}*/
 			//throw new DaoException("Impossible de communiquer avec la base de données finally");
 		}
-		System.out.println("fin addsubtitles");
 	}
 
 	@Override
 	public List<String> lister() {
 		// TODO Auto-generated method stub
 		List<String> nomTables = new ArrayList<String>();
-		System.out.println("debut lister");
 		Connection connexion = null;
 		try {
 			connexion = daoFactory.getConnection();
 			DatabaseMetaData md = connexion.getMetaData();
 			ResultSet rs = md.getTables(null, null, "%", null);
 			while (rs.next()) {
-			  System.out.println(rs.getString(3));
 			  nomTables.add(rs.getString(3));
 			}
 		}catch(SQLException e){
@@ -125,15 +119,12 @@ public class SubtitleDaoImpl implements SubtitleDao {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("fin lister");
 		return test;
 	}
 	
 	public void creerTable(String nomTable){
 		Connection connection = null;
 		Statement statement = null;
-		System.out.println("on est dans creerTable");
-		System.out.println(nomTable);
 		try {
 			connection = daoFactory.getConnection();
 			statement = connection.createStatement();
@@ -153,22 +144,18 @@ public class SubtitleDaoImpl implements SubtitleDao {
 		}
 	}
 	
-	public int extraireTraduction(String nomTable, String cheminWebInf){
+	public int extraireTraduction(String nomTable, String cheminWebInf) throws DaoException{
 		
 		int testExtraction = 0;
-		
-		Accueil accueil = new Accueil();
 		
 		List<Subtitle> subtitles = new ArrayList<Subtitle>();
 		PrintWriter writer = null;
 		Connection connexion = null;
 		Statement statement = null;
 		ResultSet resultat = null;
-		System.out.println("debut extraireTraduction");
 		try {
 			if(testSiLaTableExist(nomTable)==1){
 				
-				System.out.println("La traduction existe");
 				testExtraction = 1;
 				connexion = daoFactory.getConnection();
 				statement = connexion.createStatement();
@@ -191,7 +178,6 @@ public class SubtitleDaoImpl implements SubtitleDao {
 				// creates the directory if it does not exist
 				String uploadPath = cheminWebInf+File.separator+"upload";
 
-				System.out.println(uploadPath);
 			    File uploadDir = new File(uploadPath);
 			    if (!uploadDir.exists()) {
 			        uploadDir.mkdir();
@@ -207,22 +193,17 @@ public class SubtitleDaoImpl implements SubtitleDao {
 					writer.println(s.getSubtitle()+"\n");
 					i++;
 				}
-				System.out.println("fin extraireTraduction");
 			}
 			else{
-				System.out.println("La traduction n'existe pas");
 				testExtraction = 0;
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DaoException("Le fichier que vous voulez extraire n'existe pas");
 		}catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DaoException("Le fichier que vous voulez extraire n'existe pas");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DaoException("Le fichier que vous voulez extraire n'existe pas");
 		} finally{
 			if(writer != null){
 				writer.close();
@@ -242,7 +223,6 @@ public class SubtitleDaoImpl implements SubtitleDao {
 		try {
 			if(testSiLaTableExist(nomTable)==1){
 				
-				System.out.println("La traduction existe");
 				connexion = daoFactory.getConnection();
 				statement = connexion.createStatement();
 				resultat = statement.executeQuery("SELECT time, subtitle FROM "+nomTable+";");
@@ -252,10 +232,6 @@ public class SubtitleDaoImpl implements SubtitleDao {
 					//System.out.println(time + " " + subtitle);
 					subtitles.add(subtitle);
 				}
-				System.out.println("fin ouvrir traduction");
-			}
-			else{
-				System.out.println("La traduction n'existe pas");
 			}
 			
 		} catch (SQLException e) {

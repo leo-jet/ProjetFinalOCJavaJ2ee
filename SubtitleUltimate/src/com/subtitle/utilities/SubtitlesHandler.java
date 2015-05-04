@@ -27,7 +27,7 @@ public class SubtitlesHandler {
 		this.translatedSubtitles = translatedSubtitles;
 	}
 
-	public SubtitlesHandler(String fileName) {
+	public SubtitlesHandler(String fileName) throws SubtitlesHandlerException{
 		
 		ArrayList<String> tamponSubtitles = new ArrayList<String>();
 		originalSubtitles = new ArrayList<String>();
@@ -36,7 +36,12 @@ public class SubtitlesHandler {
 		
 		
 		try {
-			br = new BufferedReader(new FileReader(fileName));
+			
+			try {
+				br = new BufferedReader(new FileReader(fileName));
+			} catch (Exception e) {
+				throw new SubtitlesHandlerException("Le fichier "+fileName+" n'existe pas dans le dossier upload");
+			}
 			String line;
 			
 			while ((line = br.readLine()) != null) {

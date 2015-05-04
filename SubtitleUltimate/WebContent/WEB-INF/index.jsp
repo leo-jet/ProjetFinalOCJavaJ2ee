@@ -45,5 +45,15 @@
 			<li class="last"><a href="#"><span>Contacts</span></a></li>
 		</ul>
 	</div>
+	
+	<h1 style="text-align: center;">
+	Bienvenue sur mon &eacute;diteur de sous-titre.</h1>
+<h2>
+	1-) Pour ex&eacute;cuter ce projet vous devez :&nbsp;</h2>
+<h2>
+	-<span style="color:#ff0000;">Configurer la base de donn&eacute;es </span>: j&#39;utilise une base de donn&eacute;es Mysql. Vous devez le faire dans le fichier DaoFactory.java et DaoFactoryImpl.java.&nbsp;</h2>
+<h2>
+	- <span style="color:#ff0000;">Renseigner le chemin du dossier de sauvegarde des fichiers</span>. Pour cela vous devez modifier le constructeur de la classe DossierUpload.java.</h2>
+	
 </body>
 </html>
